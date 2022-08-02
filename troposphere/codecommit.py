@@ -28,20 +28,19 @@ class Trigger(AWSProperty):
     }
 
     def validate(self):
-        valid = [
-            "all",
-            "createReference",
-            "deleteReference",
-            "updateReference",
-        ]
         events = self.properties.get("Events")
         if events and not isinstance(events, AWSHelperFn):
             if "all" in events and len(events) != 1:
                 raise ValueError("Trigger events: all must be used alone")
-            else:
-                for e in events:
-                    if e not in valid and not isinstance(e, AWSHelperFn):
-                        raise ValueError("Trigger: invalid event %s" % e)
+            valid = [
+                "all",
+                "createReference",
+                "deleteReference",
+                "updateReference",
+            ]
+            for e in events:
+                if e not in valid and not isinstance(e, AWSHelperFn):
+                    raise ValueError(f"Trigger: invalid event {e}")
 
 
 class Repository(AWSObject):

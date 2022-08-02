@@ -15,14 +15,15 @@ def validate_workgroup_state(workgroup_state):
 
     if workgroup_state not in VALID_WORKGROUP_STATE:
         raise ValueError(
-            "Workgroup State must be one of: %s" % ", ".join(VALID_WORKGROUP_STATE)
+            f'Workgroup State must be one of: {", ".join(VALID_WORKGROUP_STATE)}'
         )
+
     return workgroup_state
 
 
 def validate_encryptionconfiguration_encryptionoption(
     encryptionconfiguration_encryptionoption,
-):  # NOQA
+):    # NOQA
     """Validate EncryptionOption for EncryptionConfiguration"""
 
     if (
@@ -30,9 +31,9 @@ def validate_encryptionconfiguration_encryptionoption(
         not in VALID_ENCRYPTIONCONFIGURATION_ENCRYPTIONOPTION
     ):  # NOQA
         raise ValueError(
-            "EncryptionConfiguration EncryptionOption must be one of: %s"
-            % ", ".join(VALID_ENCRYPTIONCONFIGURATION_ENCRYPTIONOPTION)  # NOQA
-        )  # NOQA
+            f'EncryptionConfiguration EncryptionOption must be one of: {", ".join(VALID_ENCRYPTIONCONFIGURATION_ENCRYPTIONOPTION)}'
+        )
+
     return encryptionconfiguration_encryptionoption
 
 

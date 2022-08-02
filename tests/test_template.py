@@ -41,28 +41,28 @@ class TestInitArguments(unittest.TestCase):
 class TestValidate(unittest.TestCase):
     def test_max_parameters(self):
         template = Template()
-        for i in range(0, MAX_PARAMETERS):
+        for i in range(MAX_PARAMETERS):
             template.add_parameter(Parameter(str(i), Type="String"))
         with self.assertRaises(ValueError):
             template.add_parameter(Parameter("parameter", Type="String"))
 
     def test_max_resources(self):
         template = Template()
-        for i in range(0, MAX_RESOURCES):
+        for i in range(MAX_RESOURCES):
             template.add_resource(Bucket(str(i)))
         with self.assertRaises(ValueError):
             template.add_resource(Bucket("bucket"))
 
     def test_max_outputs(self):
         template = Template()
-        for i in range(0, MAX_OUTPUTS):
+        for i in range(MAX_OUTPUTS):
             template.add_output(Output(str(i), Value=str(i)))
         with self.assertRaises(ValueError):
             template.add_output(Output("output", Value="output"))
 
     def test_max_mappings(self):
         template = Template()
-        for i in range(0, MAX_MAPPINGS):
+        for i in range(MAX_MAPPINGS):
             template.add_mapping(str(i), {"n": "v"})
         with self.assertRaises(ValueError):
             template.add_mapping("mapping", {"n": "v"})
@@ -110,7 +110,7 @@ class TestEquality(unittest.TestCase):
         t2.add_resource(resource)
         t2.add_output(output)
 
-        self.assertEqual(len(set([t1, t2])), 1)
+        self.assertEqual(len({t1, t2}), 1)
 
 
 class TestAwsInterface(unittest.TestCase):

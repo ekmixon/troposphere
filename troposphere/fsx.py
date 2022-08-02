@@ -13,7 +13,7 @@ VALID_LUSTRECONFIGURATION_PERUNITSTORAGETHROUGHPUT = (50, 100, 200)
 
 def validate_lustreconfiguration_deploymenttype(
     lustreconfiguration_deploymenttype,
-):  # NOQA
+):    # NOQA
     """Validate DeploymentType for LustreConfiguration"""
 
     if (
@@ -21,15 +21,15 @@ def validate_lustreconfiguration_deploymenttype(
         not in VALID_LUSTRECONFIGURATION_DEPLOYMENTTYPE
     ):  # NOQA
         raise ValueError(
-            "LustreConfiguration DeploymentType must be one of: %s"
-            % ", ".join(VALID_LUSTRECONFIGURATION_DEPLOYMENTTYPE)  # NOQA
+            f'LustreConfiguration DeploymentType must be one of: {", ".join(VALID_LUSTRECONFIGURATION_DEPLOYMENTTYPE)}'
         )
+
     return lustreconfiguration_deploymenttype
 
 
 def validate_lustreconfiguration_perunitstoragethroughput(
     lustreconfiguration_perunitstoragethroughput,
-):  # NOQA
+):    # NOQA
     """Validate PerUnitStorageThroughput for LustreConfiguration"""
 
     if (
@@ -37,9 +37,9 @@ def validate_lustreconfiguration_perunitstoragethroughput(
         not in VALID_LUSTRECONFIGURATION_PERUNITSTORAGETHROUGHPUT
     ):  # NOQA
         raise ValueError(
-            "LustreConfiguration PerUnitStorageThroughput must be one of: %s"
-            % ", ".join(VALID_LUSTRECONFIGURATION_PERUNITSTORAGETHROUGHPUT)  # NOQA
-        )  # NOQA
+            f'LustreConfiguration PerUnitStorageThroughput must be one of: {", ".join(VALID_LUSTRECONFIGURATION_PERUNITSTORAGETHROUGHPUT)}'
+        )
+
     return lustreconfiguration_perunitstoragethroughput
 
 

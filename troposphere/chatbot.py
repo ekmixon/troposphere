@@ -17,9 +17,9 @@ def validate_logginglevel(slackchannelconfiguration_logginglevel):
         not in VALID_SLACKCHANNELCONFIGURATION_LOGGINGLEVEL
     ):  # NOQA
         raise ValueError(
-            "SlackChannelConfiguration LoggingLevel must be one of: %s"
-            % ", ".join(VALID_SLACKCHANNELCONFIGURATION_LOGGINGLEVEL)  # NOQA
-        )  # NOQA
+            f'SlackChannelConfiguration LoggingLevel must be one of: {", ".join(VALID_SLACKCHANNELCONFIGURATION_LOGGINGLEVEL)}'
+        )
+
     return slackchannelconfiguration_logginglevel
 
 

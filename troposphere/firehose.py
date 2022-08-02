@@ -10,7 +10,7 @@ from .validators import boolean, integer, positive_integer
 def processor_type_validator(x):
     valid_types = ["Lambda"]
     if x not in valid_types:
-        raise ValueError("Type must be one of: %s" % ", ".join(valid_types))
+        raise ValueError(f'Type must be one of: {", ".join(valid_types)}')
     return x
 
 
@@ -18,8 +18,9 @@ def delivery_stream_type_validator(x):
     valid_types = ["DirectPut", "KinesisStreamAsSource"]
     if x not in valid_types:
         raise ValueError(
-            "DeliveryStreamType must be one of: %s" % ", ".join(valid_types)
+            f'DeliveryStreamType must be one of: {", ".join(valid_types)}'
         )
+
     return x
 
 
@@ -27,22 +28,23 @@ def index_rotation_period_validator(x):
     valid_types = ["NoRotation", "OneHour", "OneDay", "OneWeek", "OneMonth"]
     if x not in valid_types:
         raise ValueError(
-            "IndexRotationPeriod must be one of: %s" % ", ".join(valid_types)
+            f'IndexRotationPeriod must be one of: {", ".join(valid_types)}'
         )
+
     return x
 
 
 def s3_backup_mode_elastic_search_validator(x):
     valid_types = ["FailedDocumentsOnly", "AllDocuments"]
     if x not in valid_types:
-        raise ValueError("S3BackupMode must be one of: %s" % ", ".join(valid_types))
+        raise ValueError(f'S3BackupMode must be one of: {", ".join(valid_types)}')
     return x
 
 
 def s3_backup_mode_extended_s3_validator(x):
     valid_types = ["Disabled", "Enabled"]
     if x not in valid_types:
-        raise ValueError("S3BackupMode must be one of: %s" % ", ".join(valid_types))
+        raise ValueError(f'S3BackupMode must be one of: {", ".join(valid_types)}')
     return x
 
 

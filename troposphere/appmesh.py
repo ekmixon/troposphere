@@ -20,8 +20,9 @@ def validate_listenertls_mode(listenertls_mode):
 
     if listenertls_mode not in VALID_LISTENERTLS_MODE:
         raise ValueError(
-            "ListernerTls Mode must be one of: %s" % ", ".join(VALID_LISTENERTLS_MODE)
+            f'ListernerTls Mode must be one of: {", ".join(VALID_LISTENERTLS_MODE)}'
         )
+
     return listenertls_mode
 
 

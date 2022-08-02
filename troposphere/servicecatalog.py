@@ -169,7 +169,7 @@ def validate_tag_update(update):
         "NOT_ALLOWED",
     ]
     if update not in valid_tag_update_values:
-        raise ValueError("{} is not a valid tag update value".format(update))
+        raise ValueError(f"{update} is not a valid tag update value")
     return update
 
 

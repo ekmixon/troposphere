@@ -122,20 +122,22 @@ stage_name = "v1"
 
 deployment = t.add_resource(
     Deployment(
-        "%sDeployment" % stage_name,
+        f"{stage_name}Deployment",
         DependsOn="LambdaMethod",
         RestApiId=Ref(rest_api),
     )
 )
 
+
 stage = t.add_resource(
     Stage(
-        "%sStage" % stage_name,
+        f"{stage_name}Stage",
         StageName=stage_name,
         RestApiId=Ref(rest_api),
         DeploymentId=Ref(deployment),
     )
 )
+
 
 key = t.add_resource(
     ApiKey(

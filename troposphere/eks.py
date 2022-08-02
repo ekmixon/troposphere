@@ -13,8 +13,9 @@ def validate_taint_effect(taint_effect):
     """Taint Effect validation rule."""
     if taint_effect not in VALID_TAINT_EFFECT:
         raise ValueError(
-            "Taint Effect must be one of: %s" % ", ".join(VALID_TAINT_EFFECT)
+            f'Taint Effect must be one of: {", ".join(VALID_TAINT_EFFECT)}'
         )
+
     return taint_effect
 
 
@@ -61,7 +62,7 @@ class LogSetup(AWSProperty):
         ]
         if not (types.issubset(conditionals)):
             raise ValueError(
-                "%s must be one of: %s" % (", ".join(types), ", ".join(conditionals))
+                f'{", ".join(types)} must be one of: {", ".join(conditionals)}'
             )
 
 

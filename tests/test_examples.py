@@ -29,8 +29,7 @@ class TestExamples(unittest.TestCase):
 
 
 def create_test_class(testname, **kwargs):
-    klass = type(testname, (TestExamples,), kwargs)
-    return klass
+    return type(testname, (TestExamples,), kwargs)
 
 
 def load_tests(loader, tests, pattern):
@@ -42,11 +41,14 @@ def load_tests(loader, tests, pattern):
     suite = unittest.TestSuite()
 
     for f in example_filesnames:
-        testname = "test_" + f[:-3]
-        expected_output = open("tests/examples_output/%s.template" % f[:-3]).read()
+        testname = f"test_{f[:-3]}"
+        expected_output = open(f"tests/examples_output/{f[:-3]}.template").read()
         test_class = create_test_class(
-            testname, filename=examples + "/" + f, expected_output=expected_output
+            testname,
+            filename=f"{examples}/{f}",
+            expected_output=expected_output,
         )
+
         tests = loader.loadTestsFromTestCase(test_class)
         suite.addTests(tests)
 

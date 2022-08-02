@@ -445,7 +445,7 @@ def validate_gateway_response_type(response_type):
         "UNSUPPORTED_MEDIA_TYPE",
     ]
     if response_type not in valid_response_types:
-        raise ValueError("{} is not a valid ResponseType".format(response_type))
+        raise ValueError(f"{response_type} is not a valid ResponseType")
     return response_type
 
 

@@ -40,8 +40,7 @@ class SourceDetails(AWSProperty):
         freq = self.properties.get("MaximumExecutionFrequency")
         if freq and freq not in valid_freqs:
             raise ValueError(
-                "MaximumExecutionFrequency (given: %s) must be one of: %s"
-                % (freq, ", ".join(valid_freqs))
+                f'MaximumExecutionFrequency (given: {freq}) must be one of: {", ".join(valid_freqs)}'
             )
 
 

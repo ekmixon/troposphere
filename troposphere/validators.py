@@ -49,9 +49,9 @@ def integer_list_item(allowed_values):
         if i in allowed_values:
             return x
         raise ValueError(
-            "Integer must be one of following: %s"
-            % ", ".join(str(j) for j in allowed_values)
+            f'Integer must be one of following: {", ".join((str(j) for j in allowed_values))}'
         )
+
 
     return integer_list_item_checker
 
@@ -89,9 +89,7 @@ def network_port(x):
 
 
 def tg_healthcheck_port(x):
-    if isinstance(x, str) and x == "traffic-port":
-        return x
-    return network_port(x)
+    return x if isinstance(x, str) and x == "traffic-port" else network_port(x)
 
 
 def s3_bucket_name(b):
@@ -99,19 +97,19 @@ def s3_bucket_name(b):
     # consecutive periods not allowed
 
     if ".." in b:
-        raise ValueError("%s is not a valid s3 bucket name" % b)
+        raise ValueError(f"{b} is not a valid s3 bucket name")
 
     # IP addresses not allowed
 
     ip_re = compile(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$")
     if ip_re.match(b):
-        raise ValueError("%s is not a valid s3 bucket name" % b)
+        raise ValueError(f"{b} is not a valid s3 bucket name")
 
     s3_bucket_name_re = compile(r"^[a-z\d][a-z\d\.-]{1,61}[a-z\d]$")
     if s3_bucket_name_re.match(b):
         return b
     else:
-        raise ValueError("%s is not a valid s3 bucket name" % b)
+        raise ValueError(f"{b} is not a valid s3 bucket name")
 
 
 def elb_name(b):
@@ -121,7 +119,7 @@ def elb_name(b):
     if elb_name_re.match(b):
         return b
     else:
-        raise ValueError("%s is not a valid elb name" % b)
+        raise ValueError(f"{b} is not a valid elb name")
 
 
 def encoding(encoding):
@@ -152,7 +150,7 @@ def iam_names(b):
     if iam_name_re.match(b):
         return b
     else:
-        raise ValueError("%s is not a valid iam name" % b)
+        raise ValueError(f"{b} is not a valid iam name")
 
 
 def iam_user_name(user_name):
@@ -179,7 +177,7 @@ def iam_path(path):
 
     iam_path_re = compile(r"^\/.*\/$|^\/$")
     if not iam_path_re.match(path):
-        raise ValueError("%s is not a valid iam path name" % path)
+        raise ValueError(f"{path} is not a valid iam path name")
     return path
 
 
@@ -213,17 +211,17 @@ def one_of(class_name, properties, property, conditionals):
 def mutually_exclusive(class_name, properties, conditionals):
     from . import NoValue
 
-    found_list = []
-    for c in conditionals:
-        if c in properties and not properties[c] == NoValue:
-            found_list.append(c)
+    found_list = [
+        c for c in conditionals if c in properties and properties[c] != NoValue
+    ]
+
     seen = set(found_list)
     specified_count = len(seen)
     if specified_count > 1:
         raise ValueError(
-            ("%s: only one of the following" " can be specified: %s")
-            % (class_name, ", ".join(conditionals))
+            f'{class_name}: only one of the following can be specified: {", ".join(conditionals)}'
         )
+
     return specified_count
 
 
@@ -231,16 +229,16 @@ def exactly_one(class_name, properties, conditionals):
     specified_count = mutually_exclusive(class_name, properties, conditionals)
     if specified_count != 1:
         raise ValueError(
-            ("%s: one of the following" " must be specified: %s")
-            % (class_name, ", ".join(conditionals))
+            f'{class_name}: one of the following must be specified: {", ".join(conditionals)}'
         )
+
     return specified_count
 
 
 def check_required(class_name, properties, conditionals):
     for c in conditionals:
         if c not in properties:
-            raise ValueError("Resource %s required in %s" % (c, class_name))
+            raise ValueError(f"Resource {c} required in {class_name}")
 
 
 def json_checker(prop):
@@ -512,7 +510,7 @@ def backup_vault_name(name):
     if vault_name_re.match(name):
         return name
     else:
-        raise ValueError("%s is not a valid backup vault name" % name)
+        raise ValueError(f"{name} is not a valid backup vault name")
 
 
 def waf_action_type(action):

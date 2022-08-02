@@ -14,9 +14,9 @@ def validate_recoveryoption_name(recoveryoption_name):
 
     if recoveryoption_name not in VALID_RECOVERYOPTION_NAME:
         raise ValueError(
-            "RecoveryOption Name must be one of: %s"
-            % ", ".join(VALID_RECOVERYOPTION_NAME)
+            f'RecoveryOption Name must be one of: {", ".join(VALID_RECOVERYOPTION_NAME)}'
         )
+
     return recoveryoption_name
 
 

@@ -14,9 +14,9 @@ def validate_connection_providertype(connection_providertype):
 
     if connection_providertype not in VALID_CONNECTION_PROVIDERTYPE:
         raise ValueError(
-            "Connection ProviderType must be one of: %s"
-            % ", ".join(VALID_CONNECTION_PROVIDERTYPE)
+            f'Connection ProviderType must be one of: {", ".join(VALID_CONNECTION_PROVIDERTYPE)}'
         )
+
     return connection_providertype
 
 

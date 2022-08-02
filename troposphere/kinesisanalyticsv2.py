@@ -14,9 +14,9 @@ def validate_runtime_environment(runtime_environment):
 
     if runtime_environment not in VALID_RUNTIME_ENVIRONMENTS:
         raise ValueError(
-            "Application RuntimeEnvironment must be one of: %s"
-            % ", ".join(VALID_RUNTIME_ENVIRONMENTS)
+            f'Application RuntimeEnvironment must be one of: {", ".join(VALID_RUNTIME_ENVIRONMENTS)}'
         )
+
     return runtime_environment
 
 

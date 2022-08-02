@@ -50,10 +50,9 @@ def validate_package_type(package_type):
     """
     if package_type not in PACKAGE_TYPES:
         raise ValueError(
-            "Lambda Function PackageType must be one of: {}".format(
-                ", ".join(PACKAGE_TYPES)
-            )
+            f'Lambda Function PackageType must be one of: {", ".join(PACKAGE_TYPES)}'
         )
+
     return package_type
 
 
@@ -65,7 +64,7 @@ def validate_variables_name(variables):
                 " can't be none of:\n %s" % ", ".join(RESERVED_ENVIRONMENT_VARIABLES)
             )
         elif not re.match(ENVIRONMENT_VARIABLES_NAME_PATTERN, name):
-            raise ValueError("Invalid environment variable name: %s" % name)
+            raise ValueError(f"Invalid environment variable name: {name}")
 
     return variables
 
@@ -107,11 +106,7 @@ class Code(AWSProperty):
                 return
 
             # Get the length of the delimiter
-            if isinstance(delimiter, str):
-                d_length = len(delimiter)
-            else:
-                d_length = 0
-
+            d_length = len(delimiter) if isinstance(delimiter, str) else 0
             # Get the length of each value that will be joined
             v_lengths = [len(v) for v in values if isinstance(v, str)]
 

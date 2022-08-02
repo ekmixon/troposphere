@@ -46,8 +46,9 @@ def deployment_option_validator(x):
     valid_values = ["WITH_TRAFFIC_CONTROL", "WITHOUT_TRAFFIC_CONTROL"]
     if x not in valid_values:
         raise ValueError(
-            "Deployment Option value must be one of: %s" % ", ".join(valid_values)
+            f'Deployment Option value must be one of: {", ".join(valid_values)}'
         )
+
     return x
 
 
@@ -55,8 +56,9 @@ def deployment_type_validator(x):
     valid_values = ["IN_PLACE", "BLUE_GREEN"]
     if x not in valid_values:
         raise ValueError(
-            "Deployment Type value must be one of: %s" % ", ".join(valid_values)
+            f'Deployment Type value must be one of: {", ".join(valid_values)}'
         )
+
     return x
 
 

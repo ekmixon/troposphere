@@ -18,9 +18,9 @@ def validate_volume_type(volume_type):
     """Validate VolumeType for ElasticsearchDomain"""
     if volume_type not in VALID_VOLUME_TYPES:
         raise ValueError(
-            "Elasticsearch Domain VolumeType must be one of: %s"
-            % ", ".join(VALID_VOLUME_TYPES)
+            f'Elasticsearch Domain VolumeType must be one of: {", ".join(VALID_VOLUME_TYPES)}'
         )
+
     return volume_type
 
 
@@ -28,9 +28,9 @@ def validate_tls_security_policy(tls_security_policy):
     """Validate TLS Security Policy for ElasticsearchDomain"""
     if tls_security_policy not in VALID_TLS_SECURITY_POLICIES:
         raise ValueError(
-            "Minimum TLS Security Policy must be one of: %s"
-            % ", ".join(VALID_TLS_SECURITY_POLICIES)
+            f'Minimum TLS Security Policy must be one of: {", ".join(VALID_TLS_SECURITY_POLICIES)}'
         )
+
     return tls_security_policy
 
 

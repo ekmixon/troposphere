@@ -204,26 +204,27 @@ class AutoScalingGroup(AWSObject):
             if (
                 not isinstance(update_policy, AWSHelperFn)
                 and "AutoScalingRollingUpdate" in update_policy.properties
+            ) and not isinstance(
+                update_policy.AutoScalingRollingUpdate, AWSHelperFn
             ):
-                if not isinstance(update_policy.AutoScalingRollingUpdate, AWSHelperFn):
-                    rolling_update = update_policy.AutoScalingRollingUpdate
+                rolling_update = update_policy.AutoScalingRollingUpdate
 
-                    min_instances = rolling_update.properties.get(
-                        "MinInstancesInService", "0"
-                    )
-                    is_min_no_check = isinstance(min_instances, (If, FindInMap, Ref))
-                    is_max_no_check = isinstance(self.MaxSize, (If, FindInMap, Ref))
+                min_instances = rolling_update.properties.get(
+                    "MinInstancesInService", "0"
+                )
+                is_min_no_check = isinstance(min_instances, (If, FindInMap, Ref))
+                is_max_no_check = isinstance(self.MaxSize, (If, FindInMap, Ref))
 
-                    if not (is_min_no_check or is_max_no_check):
-                        max_count = int(self.MaxSize)
-                        min_count = int(min_instances)
+                if not (is_min_no_check or is_max_no_check):
+                    max_count = int(self.MaxSize)
+                    min_count = int(min_instances)
 
-                        if min_count >= max_count:
-                            raise ValueError(
-                                "The UpdatePolicy attribute "
-                                "MinInstancesInService must be less than the "
-                                "autoscaling group's MaxSize"
-                            )
+                    if min_count >= max_count:
+                        raise ValueError(
+                            "The UpdatePolicy attribute "
+                            "MinInstancesInService must be less than the "
+                            "autoscaling group's MaxSize"
+                        )
 
         instance_config_types = [
             "LaunchConfigurationName",

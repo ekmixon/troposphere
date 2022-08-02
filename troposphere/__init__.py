@@ -55,18 +55,9 @@ def encode_to_dict(obj):
         # nomalized to a base dictionary all the way down.
         return encode_to_dict(obj.to_dict())
     elif isinstance(obj, (list, tuple)):
-        new_lst = []
-        for o in obj:
-            new_lst.append(encode_to_dict(o))
-        return new_lst
+        return [encode_to_dict(o) for o in obj]
     elif isinstance(obj, dict):
-        props = {}
-        for name, prop in obj.items():
-            props[name] = encode_to_dict(prop)
-
-        return props
-    # This is useful when dealing with external libs using
-    # this format. Specifically awacs.
+        return {name: encode_to_dict(prop) for name, prop in obj.items()}
     elif hasattr(obj, "JSONrepr"):
         return encode_to_dict(obj.JSONrepr())
     return obj
@@ -109,8 +100,7 @@ class BaseAWSObject:
 
         # Create the list of properties set on this object by the user
         self.properties = {}
-        dictname = getattr(self, "dictname", None)
-        if dictname:
+        if dictname := getattr(self, "dictname", None):
             self.resource = {
                 dictname: self.properties,
             }
@@ -178,10 +168,14 @@ class BaseAWSObject:
             # If the value is a AWSHelperFn we can't do much validation
             # we'll have to leave that to Amazon.  Maybe there's another way
             # to deal with this that we'll come up with eventually
-            if isinstance(value, AWSHelperFn):
+            if (
+                isinstance(value, AWSHelperFn)
+                or not isinstance(expected_type, types.FunctionType)
+                and not isinstance(expected_type, list)
+                and isinstance(value, expected_type)
+            ):
                 return self.properties.__setitem__(name, value)
 
-            # If it's a function, call it...
             elif isinstance(expected_type, types.FunctionType):
                 try:
                     value = expected_type(value)
@@ -194,7 +188,6 @@ class BaseAWSObject:
                     raise
                 return self.properties.__setitem__(name, value)
 
-            # If it's a list of types, check against those types...
             elif isinstance(expected_type, list):
                 # If we're expecting a list, then make sure it is a list
                 if not isinstance(value, list):
@@ -218,11 +211,6 @@ class BaseAWSObject:
                 # Validated so assign it
                 return self.properties.__setitem__(name, value)
 
-            # Final validity check, compare the type of value against
-            # expected_type which should now be either a single type or
-            # a tuple of types.
-            elif isinstance(value, expected_type):
-                return self.properties.__setitem__(name, value)
             else:
                 self._raise_type(name, value, expected_type)
 
@@ -235,14 +223,11 @@ class BaseAWSObject:
             # validation. The properties of a CustomResource is not known.
             return self.properties.__setitem__(name, value)
 
-        raise AttributeError(
-            "%s object does not support attribute %s" % (type_name, name)
-        )
+        raise AttributeError(f"{type_name} object does not support attribute {name}")
 
     def _raise_type(self, name, value, expected_type):
         raise TypeError(
-            "%s: %s.%s is %s, expected %s"
-            % (self.__class__, self.title, name, type(value), expected_type)
+            f"{self.__class__}: {self.title}.{name} is {type(value)}, expected {expected_type}"
         )
 
     def validate_title(self):
@@ -264,11 +249,7 @@ class BaseAWSObject:
         if self.properties:
             return encode_to_dict(self.resource)
         elif hasattr(self, "resource_type"):
-            d = {}
-            for k, v in self.resource.items():
-                if k != "Properties":
-                    d[k] = v
-            return d
+            return {k: v for k, v in self.resource.items() if k != "Properties"}
         else:
             return {}
 
@@ -285,8 +266,7 @@ class BaseAWSObject:
                 )
             prop_type = prop_attrs[0]
             value = kwargs[prop_name]
-            is_aws_object = is_aws_object_subclass(prop_type)
-            if is_aws_object:
+            if is_aws_object := is_aws_object_subclass(prop_type):
                 if not isinstance(value, collections.Mapping):
                     raise ValueError(
                         "Property definition for %s must be "
@@ -296,7 +276,7 @@ class BaseAWSObject:
 
             if isinstance(prop_type, list):
                 if not isinstance(value, list):
-                    raise TypeError("Attribute %s must be a " "list." % prop_name)
+                    raise TypeError(f"Attribute {prop_name} must be a list.")
                 new_value = []
                 for v in value:
                     new_v = v
@@ -310,9 +290,7 @@ class BaseAWSObject:
                     new_value.append(new_v)
                 value = new_value
             props[prop_name] = value
-        if title:
-            return cls(title, **props)
-        return cls(**props)
+        return cls(title, **props) if title else cls(**props)
 
     @classmethod
     def from_dict(cls, title, d):
@@ -323,9 +301,9 @@ class BaseAWSObject:
             if required and k not in self.properties:
                 rtype = getattr(self, "resource_type", "<unknown type>")
                 title = getattr(self, "title")
-                msg = "Resource %s required in type %s" % (k, rtype)
+                msg = f"Resource {k} required in type {rtype}"
                 if title:
-                    msg += " (title: %s)" % title
+                    msg += f" (title: {title})"
                 raise ValueError(msg)
 
 
@@ -387,7 +365,7 @@ class AWSAttribute(BaseAWSObject):
 
 def validate_delimiter(delimiter):
     if not isinstance(delimiter, str):
-        raise ValueError("Delimiter must be a String, %s provided" % type(delimiter))
+        raise ValueError(f"Delimiter must be a String, {type(delimiter)} provided")
 
 
 def validate_pausetime(pausetime):
@@ -398,10 +376,7 @@ def validate_pausetime(pausetime):
 
 class AWSHelperFn:
     def getdata(self, data):
-        if isinstance(data, BaseAWSObject):
-            return data.title
-        else:
-            return data
+        return data.title if isinstance(data, BaseAWSObject) else data
 
     def to_dict(self):
         return encode_to_dict(self.data)
@@ -488,7 +463,7 @@ class Sub(AWSHelperFn):
     def __init__(self, input_str, dict_values=None, **values):
         # merge dict
         if dict_values:
-            values.update(dict_values)
+            values |= dict_values
         self.data = {"Fn::Sub": [input_str, values] if values else input_str}
 
 
@@ -687,10 +662,7 @@ class Template:
         self.rules[name] = rule
 
     def set_version(self, version=None):
-        if version:
-            self.version = version
-        else:
-            self.version = "2010-09-09"
+        self.version = version or "2010-09-09"
 
     def set_transform(self, transform):
         self.transform = transform
@@ -747,12 +719,10 @@ class Template:
         if isinstance(parameter, BaseAWSObject):
             parameter = parameter.title
 
-        # Check if group_name already exists
-        existing_group = None
-        for group in groups:
-            if group["Label"]["default"] == group_name:
-                existing_group = group
-                break
+        existing_group = next(
+            (group for group in groups if group["Label"]["default"] == group_name),
+            None,
+        )
 
         if existing_group is None:
             existing_group = {
@@ -878,12 +848,8 @@ class Parameter(AWSDeclaration):
         if self.properties["Type"] != "String":
             for p in self.STRING_PROPERTIES:
                 if p in self.properties:
-                    raise ValueError(
-                        "%s can only be used with parameters of " "the String type." % p
-                    )
+                    raise ValueError(f"{p} can only be used with parameters of the String type.")
         if self.properties["Type"] != "Number":
             for p in self.NUMBER_PROPERTIES:
                 if p in self.properties:
-                    raise ValueError(
-                        "%s can only be used with parameters of " "the Number type." % p
-                    )
+                    raise ValueError(f"{p} can only be used with parameters of the Number type.")

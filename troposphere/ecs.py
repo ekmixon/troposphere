@@ -174,8 +174,9 @@ def placement_strategy_validator(x):
     valid_values = ["random", "spread", "binpack"]
     if x not in valid_values:
         raise ValueError(
-            "Placement Strategy type must be one of: %s" % ", ".join(valid_values)
+            f'Placement Strategy type must be one of: {", ".join(valid_values)}'
         )
+
     return x
 
 
@@ -183,15 +184,16 @@ def placement_constraint_validator(x):
     valid_values = ["distinctInstance", "memberOf"]
     if x not in valid_values:
         raise ValueError(
-            "Placement Constraint type must be one of: %s" % ", ".join(valid_values)
+            f'Placement Constraint type must be one of: {", ".join(valid_values)}'
         )
+
     return x
 
 
 def scope_validator(x):
     valid_values = ["shared", "task"]
     if x not in valid_values:
-        raise ValueError("Scope type must be one of: %s" % ", ".join(valid_values))
+        raise ValueError(f'Scope type must be one of: {", ".join(valid_values)}')
     return x
 
 
@@ -226,7 +228,7 @@ class NetworkConfiguration(AWSProperty):
 def launch_type_validator(x):
     valid_values = [LAUNCH_TYPE_EC2, LAUNCH_TYPE_FARGATE]
     if x not in valid_values:
-        raise ValueError("Launch Type must be one of: %s" % ", ".join(valid_values))
+        raise ValueError(f'Launch Type must be one of: {", ".join(valid_values)}')
     return x
 
 

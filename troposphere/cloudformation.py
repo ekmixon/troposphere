@@ -171,9 +171,7 @@ class WaitCondition(AWSObject):
         if "CreationPolicy" in self.resource:
             for k in self.props.keys():
                 if k in self.properties:
-                    raise ValueError(
-                        "Property %s cannot be specified with CreationPolicy" % k
-                    )
+                    raise ValueError(f"Property {k} cannot be specified with CreationPolicy")
         else:
             required = ["Handle", "Timeout"]
             check_required(self.__class__.__name__, self.properties, required)

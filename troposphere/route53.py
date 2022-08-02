@@ -13,7 +13,7 @@ def validate_ruletype(ruletype):
     """Validate RuleType for ResolverRule."""
 
     if ruletype not in VALID_RULETYPES:
-        raise ValueError("Rule type must be one of: %s" % ", ".join(VALID_RULETYPES))
+        raise ValueError(f'Rule type must be one of: {", ".join(VALID_RULETYPES)}')
     return ruletype
 
 

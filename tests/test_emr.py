@@ -36,12 +36,13 @@ security_configuration = {
 
 class TestEMR(unittest.TestCase):
     def generate_rules(self, rules_name):
-        rules = [
+        return [
             emr.ScalingRule(
                 Name=rules_name,
-                Description="%s rules" % rules_name,
+                Description=f"{rules_name} rules",
                 Action=emr.ScalingAction(
-                    Market="ON_DEMAND", SimpleScalingPolicyConfiguration=scaling_policy
+                    Market="ON_DEMAND",
+                    SimpleScalingPolicyConfiguration=scaling_policy,
                 ),
                 Trigger=emr.ScalingTrigger(
                     CloudWatchAlarmDefinition=emr.CloudWatchAlarmDefinition(
@@ -55,14 +56,14 @@ class TestEMR(unittest.TestCase):
                         Unit="PERCENT",
                         Dimensions=[
                             emr.MetricDimension(
-                                "my.custom.master.property", "my.custom.master.value"
+                                "my.custom.master.property",
+                                "my.custom.master.value",
                             ),
                         ],
                     )
                 ),
             )
         ]
-        return rules
 
     def test_allow_string_cluster(self):
         cluster_security_configuration = emr.SecurityConfiguration(

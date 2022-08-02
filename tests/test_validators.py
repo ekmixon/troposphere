@@ -147,9 +147,9 @@ class TestValidators(unittest.TestCase):
                 iam_names(s)
 
     def test_iam_path(self):
-        for s in ["/%s/" % ("a" * 30), "/%s/" % ("a" * 510)]:
+        for s in [f'/{"a" * 30}/', f'/{"a" * 510}/']:
             iam_path(s)
-        for s in ["/%s/" % ("a" * 511), "/%s/" % ("a" * 1025)]:
+        for s in [f'/{"a" * 511}/', f'/{"a" * 1025}/']:
             with self.assertRaises(ValueError):
                 iam_path(s)
 

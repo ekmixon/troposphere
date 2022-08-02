@@ -16,7 +16,7 @@ def validate_interval(interval):
     """Interval validation rule."""
 
     if interval not in VALID_INTERVALS:
-        raise ValueError("Interval must be one of : %s" % ", ".join(VALID_INTERVALS))
+        raise ValueError(f'Interval must be one of : {", ".join(VALID_INTERVALS)}')
     return interval
 
 
@@ -25,8 +25,9 @@ def validate_interval_unit(interval_unit):
 
     if interval_unit not in VALID_INTERVAL_UNITS:
         raise ValueError(
-            "Interval unit must be one of : %s" % ", ".join(VALID_INTERVAL_UNITS)
+            f'Interval unit must be one of : {", ".join(VALID_INTERVAL_UNITS)}'
         )
+
     return interval_unit
 
 
@@ -34,7 +35,7 @@ def validate_state(state):
     """State validation rule."""
 
     if state not in VALID_STATES:
-        raise ValueError("State must be one of : %s" % ", ".join(VALID_STATES))
+        raise ValueError(f'State must be one of : {", ".join(VALID_STATES)}')
     return state
 
 

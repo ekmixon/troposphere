@@ -47,9 +47,9 @@ def validate_volume_type(volume_type):
     volume_types = ("standard", "io1", "gp2")
     if volume_type not in volume_types:
         raise ValueError(
-            "VolumeType (given: %s) must be one of: %s"
-            % (volume_type, ", ".join(volume_types))
+            f'VolumeType (given: {volume_type}) must be one of: {", ".join(volume_types)}'
         )
+
     return volume_type
 
 
@@ -127,9 +127,9 @@ def validate_data_source_type(data_source_type):
     )
     if data_source_type not in data_source_types:
         raise ValueError(
-            "Type (given: %s) must be one of: %s"
-            % (data_source_type, ", ".join(data_source_types))
+            f'Type (given: {data_source_type}) must be one of: {", ".join(data_source_types)}'
         )
+
     return data_source_type
 
 

@@ -40,7 +40,7 @@ assert types  # silence pyflakes
 def primary_key_type_validator(x):
     valid_types = ["String", "Number", "Binary"]
     if x not in valid_types:
-        raise ValueError("KeyType must be one of: %s" % ", ".join(valid_types))
+        raise ValueError(f'KeyType must be one of: {", ".join(valid_types)}')
     return x
 
 
@@ -416,7 +416,7 @@ class SNSEvent(AWSObject):
 def starting_position_validator(x):
     valid_types = ["TRIM_HORIZON", "LATEST"]
     if x not in valid_types:
-        raise ValueError("StartingPosition must be one of: %s" % ", ".join(valid_types))
+        raise ValueError(f'StartingPosition must be one of: {", ".join(valid_types)}')
     return x
 
 

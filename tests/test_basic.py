@@ -116,9 +116,9 @@ class FakeAWSObject(AWSObject):
 
     def validate(self):
         properties = self.properties
-        title = self.title
-        type = self.type
         if "callcorrect" in properties and "singlelist" in properties:
+            title = self.title
+            type = self.type
             raise ValueError(
                 (
                     "Cannot specify both 'callcorrect and 'singlelist' in "

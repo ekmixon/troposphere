@@ -183,16 +183,7 @@ class LifecycleRule(AWSProperty):
                 )
 
         if "NoncurrentVersionTransition" in self.properties:
-            if "NoncurrentVersionTransitions" not in self.properties:
-                warnings.warn(
-                    "NoncurrentVersionTransition has been deprecated in "
-                    "favour of NoncurrentVersionTransitions."
-                )
-                # Translate the old transition format to the new format
-                self.properties["NoncurrentVersionTransitions"] = [
-                    self.properties.pop("NoncurrentVersionTransition")
-                ]
-            else:
+            if "NoncurrentVersionTransitions" in self.properties:
                 raise ValueError(
                     'Cannot specify both "NoncurrentVersionTransition" and '
                     '"NoncurrentVersionTransitions" properties on S3 Bucket '
@@ -201,6 +192,14 @@ class LifecycleRule(AWSProperty):
                     "deprecated."
                 )
 
+            warnings.warn(
+                "NoncurrentVersionTransition has been deprecated in "
+                "favour of NoncurrentVersionTransitions."
+            )
+            # Translate the old transition format to the new format
+            self.properties["NoncurrentVersionTransitions"] = [
+                self.properties.pop("NoncurrentVersionTransition")
+            ]
         if (
             "ExpirationInDays" in self.properties
             and "ExpirationDate" in self.properties
@@ -509,12 +508,15 @@ class Bucket(AWSObject):
 
     def validate(self):
         access_control = self.properties.get("AccessControl")
-        if access_control is not None and not isinstance(access_control, AWSHelperFn):
-            if access_control not in self.access_control_types:
-                raise ValueError(
-                    'AccessControl must be one of "%s"'
-                    % (", ".join(self.access_control_types))
-                )
+        if (
+            access_control is not None
+            and not isinstance(access_control, AWSHelperFn)
+            and access_control not in self.access_control_types
+        ):
+            raise ValueError(
+                'AccessControl must be one of "%s"'
+                % (", ".join(self.access_control_types))
+            )
 
 
 class BucketPolicy(AWSObject):

@@ -10,21 +10,21 @@ from .validators import boolean, double, integer
 def attribute_type_validator(x):
     valid_types = ["S", "N", "B"]
     if x not in valid_types:
-        raise ValueError("AttributeType must be one of: %s" % ", ".join(valid_types))
+        raise ValueError(f'AttributeType must be one of: {", ".join(valid_types)}')
     return x
 
 
 def key_type_validator(x):
     valid_types = ["HASH", "RANGE"]
     if x not in valid_types:
-        raise ValueError("KeyType must be one of: %s" % ", ".join(valid_types))
+        raise ValueError(f'KeyType must be one of: {", ".join(valid_types)}')
     return x
 
 
 def projection_type_validator(x):
     valid_types = ["KEYS_ONLY", "INCLUDE", "ALL"]
     if x not in valid_types:
-        raise ValueError("ProjectionType must be one of: %s" % ", ".join(valid_types))
+        raise ValueError(f'ProjectionType must be one of: {", ".join(valid_types)}')
     return x
 
 
@@ -32,8 +32,9 @@ def billing_mode_validator(x):
     valid_modes = ["PROVISIONED", "PAY_PER_REQUEST"]
     if x not in valid_modes:
         raise ValueError(
-            "Table billing mode must be one of: %s" % ", ".join(valid_modes)
+            f'Table billing mode must be one of: {", ".join(valid_modes)}'
         )
+
     return x
 
 

@@ -149,7 +149,7 @@ class Action(AWSProperty):
         )
 
         def requires(action_type, prop):
-            properties = [definition for definition in self.properties.keys()]
+            properties = list(self.properties.keys())
             if self.properties.get("Type") == action_type and not self.any_property(
                 prop, properties
             ):
@@ -340,7 +340,7 @@ class TargetGroup(AWSObject):
                         ):
                             invalid_props.append(prop)
 
-                    if len(invalid_props) > 0:
+                    if invalid_props:
                         # Make error message more readable in the default case
                         type_msg = (
                             "Omitting TargetType"

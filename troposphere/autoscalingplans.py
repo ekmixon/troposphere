@@ -30,9 +30,9 @@ def validate_predictivescalingmaxcapacitybehavior(predictivescalingmaxcapacitybe
         not in VALID_PREDICTIVESCALINGMAXCAPACITYBEHAVIOR
     ):  # noqa
         raise ValueError(
-            "ScalingInstruction PredictiveScalingMaxCapacityBehavior must be one of: %s"
-            % ", ".join(VALID_PREDICTIVESCALINGMAXCAPACITYBEHAVIOR)  # noqa
+            f'ScalingInstruction PredictiveScalingMaxCapacityBehavior must be one of: {", ".join(VALID_PREDICTIVESCALINGMAXCAPACITYBEHAVIOR)}'
         )
+
     return predictivescalingmaxcapacitybehavior
 
 
@@ -41,9 +41,9 @@ def validate_predictivescalingmode(predictivescalingmode):
 
     if predictivescalingmode not in VALID_PREDICTIVESCALINGMODE:
         raise ValueError(
-            "ScalingInstruction PredictiveScalingMode must be one of: %s"
-            % ", ".join(VALID_PREDICTIVESCALINGMODE)  # noqa
+            f'ScalingInstruction PredictiveScalingMode must be one of: {", ".join(VALID_PREDICTIVESCALINGMODE)}'
         )
+
     return predictivescalingmode
 
 
@@ -52,9 +52,9 @@ def validate_scalingpolicyupdatebehavior(scalingpolicyupdatebehavior):
 
     if scalingpolicyupdatebehavior not in VALID_SCALINGPOLICYUPDATEBEHAVIOR:
         raise ValueError(
-            "ScalingInstruction ScalingPolicyUpdateBehavior must be one of: %s"
-            % ", ".join(VALID_SCALINGPOLICYUPDATEBEHAVIOR)  # noqa
+            f'ScalingInstruction ScalingPolicyUpdateBehavior must be one of: {", ".join(VALID_SCALINGPOLICYUPDATEBEHAVIOR)}'
         )
+
     return scalingpolicyupdatebehavior
 
 

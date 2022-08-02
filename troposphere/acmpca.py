@@ -23,9 +23,9 @@ def validate_validity_type(validity_type):
     """Certificate Validity Type validation rule."""
     if validity_type not in VALID_VALIDITY_TYPE:
         raise ValueError(
-            "Certificate Validity Type must be one of: %s"
-            % ", ".join(VALID_VALIDITY_TYPE)
+            f'Certificate Validity Type must be one of: {", ".join(VALID_VALIDITY_TYPE)}'
         )
+
     return validity_type
 
 
@@ -33,9 +33,9 @@ def validate_signing_algorithm(signing_algorithm):
     """Certificate SigningAlgorithm validation rule."""
     if signing_algorithm not in VALID_SIGNIN_ALGORITHM:
         raise ValueError(
-            "Certificate SigningAlgorithm must be one of: %s"
-            % ", ".join(VALID_SIGNIN_ALGORITHM)
+            f'Certificate SigningAlgorithm must be one of: {", ".join(VALID_SIGNIN_ALGORITHM)}'
         )
+
     return signing_algorithm
 
 
@@ -43,9 +43,9 @@ def validate_key_algorithm(key_algorithm):
     """CertificateAuthority KeyAlgorithm validation rule."""
     if key_algorithm not in VALID_KEY_ALGORITHM:
         raise ValueError(
-            "CertificateAuthority KeyAlgorithm must be one of: %s"
-            % ", ".join(VALID_KEY_ALGORITHM)  # NOQA
+            f'CertificateAuthority KeyAlgorithm must be one of: {", ".join(VALID_KEY_ALGORITHM)}'
         )
+
     return key_algorithm
 
 
@@ -53,9 +53,9 @@ def validate_certificateauthority_type(certificateauthority_type):
     """CertificateAuthority Type validation rule."""
     if certificateauthority_type not in VALID_CERTIFICATEAUTHORITY_TYPE:
         raise ValueError(
-            "CertificateAuthority Type must be one of: %s"
-            % ", ".join(VALID_CERTIFICATEAUTHORITY_TYPE)
+            f'CertificateAuthority Type must be one of: {", ".join(VALID_CERTIFICATEAUTHORITY_TYPE)}'
         )
+
     return certificateauthority_type
 
 

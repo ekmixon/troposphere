@@ -19,9 +19,9 @@ def validate_homedirectory_type(homedirectory_type):
 
     if homedirectory_type not in VALID_HOMEDIRECTORY_TYPE:  # NOQA
         raise ValueError(
-            "User HomeDirectoryType must be one of: %s"
-            % ", ".join(VALID_HOMEDIRECTORY_TYPE)  # NOQA
+            f'User HomeDirectoryType must be one of: {", ".join(VALID_HOMEDIRECTORY_TYPE)}'
         )
+
     return homedirectory_type
 
 

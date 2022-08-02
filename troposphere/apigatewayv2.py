@@ -22,7 +22,7 @@ def validate_integration_type(integration_type):
 
     valid_integration_types = ["AWS", "AWS_PROXY", "HTTP", "HTTP_PROXY", "MOCK"]
     if integration_type not in valid_integration_types:
-        raise ValueError("{} is not a valid IntegrationType".format(integration_type))
+        raise ValueError(f"{integration_type} is not a valid IntegrationType")
     return integration_type
 
 
@@ -30,7 +30,7 @@ def validate_authorizer_type(authorizer_type):
 
     valid_authorizer_types = ["REQUEST", "JWT"]
     if authorizer_type not in valid_authorizer_types:
-        raise ValueError("{} is not a valid AuthorizerType".format(authorizer_type))
+        raise ValueError(f"{authorizer_type} is not a valid AuthorizerType")
     return authorizer_type
 
 
@@ -38,7 +38,7 @@ def validate_logging_level(logging_level):
 
     valid_logging_levels = ["WARN", "INFO", "DEBUG"]
     if logging_level not in valid_logging_levels:
-        raise ValueError("{} is not a valid LoggingLevel".format(logging_level))
+        raise ValueError(f"{logging_level} is not a valid LoggingLevel")
     return logging_level
 
 
@@ -46,9 +46,7 @@ def validate_passthrough_behavior(passthrough_behavior):
 
     valid_passthrough_behaviors = ["WHEN_NO_MATCH", "WHEN_NO_TEMPLATES", "NEVER"]
     if passthrough_behavior not in valid_passthrough_behaviors:
-        raise ValueError(
-            "{} is not a valid PassthroughBehavior".format(passthrough_behavior)
-        )
+        raise ValueError(f"{passthrough_behavior} is not a valid PassthroughBehavior")
     return passthrough_behavior
 
 
@@ -57,10 +55,9 @@ def validate_content_handling_strategy(content_handling_strategy):
     valid_handling_strategy_values = ["CONVERT_TO_TEXT", "CONVERT_TO_BINARY"]
     if content_handling_strategy not in valid_handling_strategy_values:
         raise ValueError(
-            "{} is not a valid ContentHandlingStrategy".format(
-                content_handling_strategy
-            )
+            f"{content_handling_strategy} is not a valid ContentHandlingStrategy"
         )
+
     return content_handling_strategy
 
 

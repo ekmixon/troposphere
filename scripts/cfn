@@ -29,9 +29,7 @@ def upload_template_to_s3(conn, region, bucket_name, key_name, template):
                                                    location=region)
     key = cloudformation_bucket.new_key(key_name)
     key.set_contents_from_string(template)
-    cfn_template_url = "https://s3.amazonaws.com/%s/%s" % (
-        bucket_name, key_name)
-    return cfn_template_url
+    return f"https://s3.amazonaws.com/{bucket_name}/{key_name}"
 
 
 def validate_template(conn, template=None, url=None):
@@ -48,8 +46,7 @@ def validate_template(conn, template=None, url=None):
             sys.exit(1)
     except boto.exception.BotoServerError as e:
         # XXX - need to figure out why this isn't getting parsed from boto.
-        print("Error: %s" %
-              (literal_eval(e.error_message)['Error']['Message'],))
+        print(f"Error: {literal_eval(e.error_message)['Error']['Message']}")
         print("Exiting...")
         sys.exit(1)
     print("Template Validated")
@@ -79,11 +76,10 @@ def create_stack(
         else:
             stack_id = conn.create_stack(stackname, **kwargs)
             action = 'Created'
-        print("%s stack %s: %s" % (action, stackname, stack_id))
+        print(f"{action} stack {stackname}: {stack_id}")
     except boto.exception.BotoServerError as e:
         # XXX - need to figure out why this isn't getting parsed from boto.
-        print("Error: %s" %
-              (literal_eval(e.error_message)['Error']['Message'],))
+        print(f"Error: {literal_eval(e.error_message)['Error']['Message']}")
         print("Exiting...")
         sys.exit(1)
 
@@ -93,7 +89,7 @@ def build_s3_name(stack_name):
     name = stack_name
     if stack_name.endswith('.json'):
         name = stack_name[:-5]
-    return '%s-%s.json' % (name, timestamp)
+    return f'{name}-{timestamp}.json'
 
 
 def describe_resources(conn, stackname):
@@ -139,11 +135,7 @@ if __name__ == "__main__":
     parser.add_argument("stack", nargs='?')
     values = parser.parse_args()
 
-    if values.params:
-        values.params = [x.split('=') for x in values.params]
-    else:
-        values.params = []
-
+    values.params = [x.split('=') for x in values.params] if values.params else []
     if values.debug:
         import logging
         logging.basicConfig(filename="boto.log", level=logging.DEBUG)

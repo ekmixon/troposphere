@@ -35,9 +35,9 @@ def validate_transformation_type(transformation_type):
 
     if transformation_type not in VALID_TRANSFORMATION_TYPES:
         raise ValueError(
-            "WebACL TextTransformation must be one of: %s"
-            % ", ".join(VALID_TRANSFORMATION_TYPES)
+            f'WebACL TextTransformation must be one of: {", ".join(VALID_TRANSFORMATION_TYPES)}'
         )
+
     return transformation_type
 
 
@@ -46,9 +46,9 @@ def validate_comparison_operator(comparison_operator):
 
     if comparison_operator not in VALID_COMPARISON_OPERATORS:
         raise ValueError(
-            "WebACL SizeConstraintStatement must be one of: %s"
-            % ", ".join(VALID_COMPARISON_OPERATORS)
+            f'WebACL SizeConstraintStatement must be one of: {", ".join(VALID_COMPARISON_OPERATORS)}'
         )
+
     return comparison_operator
 
 
@@ -57,8 +57,9 @@ def validate_ipaddress_version(ipaddress_version):
 
     if ipaddress_version not in VALID_IP_VERSION:
         raise ValueError(
-            "IPSet IPAddressVersion must be one of: %s" % ", ".join(VALID_IP_VERSION)
+            f'IPSet IPAddressVersion must be one of: {", ".join(VALID_IP_VERSION)}'
         )
+
     return ipaddress_version
 
 
@@ -67,9 +68,9 @@ def validate_positional_constraint(positional_constraint):
 
     if positional_constraint not in VALID_POSITIONAL_CONSTRAINTS:
         raise ValueError(
-            "ByteMatchStatement PositionalConstraint must be one of: %s"
-            % ", ".join(VALID_POSITIONAL_CONSTRAINTS)  # NOQA
+            f'ByteMatchStatement PositionalConstraint must be one of: {", ".join(VALID_POSITIONAL_CONSTRAINTS)}'
         )
+
     return positional_constraint
 
 
@@ -80,7 +81,7 @@ def validate_custom_response_bodies(custom_response_bodies):
 
     for k, v in custom_response_bodies.items():
         if not isinstance(v, CustomResponseBody):
-            raise ValueError("value of %s must be type of CustomResponseBody" % (k))
+            raise ValueError(f"value of {k} must be type of CustomResponseBody")
 
     return custom_response_bodies
 

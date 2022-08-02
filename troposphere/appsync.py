@@ -13,7 +13,7 @@ from .validators import boolean, double
 def resolver_kind_validator(x):
     valid_types = ["UNIT", "PIPELINE"]
     if x not in valid_types:
-        raise ValueError("Kind must be one of: %s" % ", ".join(valid_types))
+        raise ValueError(f'Kind must be one of: {", ".join(valid_types)}')
     return x
 
 

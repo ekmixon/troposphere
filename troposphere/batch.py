@@ -28,7 +28,7 @@ def validate_allocation_strategy(allocation_strategy):
     """
     valid_strategies = ["BEST_FIT", "BEST_FIT_PROGRESSIVE", "SPOT_CAPACITY_OPTIMIZED"]
     if allocation_strategy not in valid_strategies:
-        raise ValueError("{} is not a valid strategy".format(allocation_strategy))
+        raise ValueError(f"{allocation_strategy} is not a valid strategy")
     return allocation_strategy
 
 
@@ -252,9 +252,7 @@ def validate_environment_state(environment_state):
     """
     valid_states = ["ENABLED", "DISABLED"]
     if environment_state not in valid_states:
-        raise ValueError(
-            "{} is not a valid environment state".format(environment_state)
-        )
+        raise ValueError(f"{environment_state} is not a valid environment state")
     return environment_state
 
 
@@ -283,7 +281,7 @@ def validate_queue_state(queue_state):
     """
     valid_states = ["ENABLED", "DISABLED"]
     if queue_state not in valid_states:
-        raise ValueError("{} is not a valid queue state".format(queue_state))
+        raise ValueError(f"{queue_state} is not a valid queue state")
     return queue_state
 
 

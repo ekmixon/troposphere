@@ -14,17 +14,18 @@ VALID_BILLINGMODE_MODE = ("ON_DEMAND", "PROVISIONED")
 def validate_clusteringkeycolumn_orderby(clusteringkeycolumn_orderby):
     if clusteringkeycolumn_orderby not in VALID_CLUSTERINGKEYCOLUMN_ORDERBY:
         raise ValueError(
-            "ClusteringKeyColumn OrderBy must be one of: %s"
-            % ", ".join(VALID_CLUSTERINGKEYCOLUMN_ORDERBY)
+            f'ClusteringKeyColumn OrderBy must be one of: {", ".join(VALID_CLUSTERINGKEYCOLUMN_ORDERBY)}'
         )
+
     return clusteringkeycolumn_orderby
 
 
 def validate_billingmode_mode(billingmode_mode):
     if billingmode_mode not in VALID_BILLINGMODE_MODE:
         raise ValueError(
-            "BillingMode Mode must be one of: %s" % ", ".join(VALID_BILLINGMODE_MODE)
+            f'BillingMode Mode must be one of: {", ".join(VALID_BILLINGMODE_MODE)}'
         )
+
     return billingmode_mode
 
 
